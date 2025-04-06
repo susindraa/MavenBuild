@@ -3,9 +3,10 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'susindraa/java-maven-app'
-        DOCKER_CREDENTIALS_ID = 'docker-id'   // DockerHub credentials
-        CONTAINER_NAME = 'java-maven-container'
-        APP_PORT = '8080'
+        DOCKER_CREDENTIALS_ID = 'docker-id'          // DockerHub credentials
+        CONTAINER_NAME = 'java-maven-container'       // Name for the running container
+        HOST_PORT = '9090'                            // Port on host (to avoid conflict with Jenkins)
+        CONTAINER_PORT = '8080'                       // App port inside the container
     }
 
     stages {
@@ -46,7 +47,7 @@ pipeline {
                     bat "docker rm -f ${CONTAINER_NAME} || echo No container to remove"
 
                     echo "Running new container from image..."
-                    bat "docker run -d -p ${APP_PORT}:${APP_PORT} --name ${CONTAINER_NAME} ${IMAGE_NAME}"
+                    bat "docker run -d -p ${HOST_PORT}:${CONTAINER_PORT} --name ${CONTAINER_NAME} ${IMAGE_NAME}"
                 }
             }
         }
