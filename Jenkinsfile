@@ -1,15 +1,15 @@
- pipeline {
+pipeline {
     agent any
 
     environment {
         IMAGE_NAME = 'susindraa/java-maven-app'
-        DOCKER_CREDENTIALS_ID = 'docker-id'   // your DockerHub credential ID in Jenkins
+        DOCKER_CREDENTIALS_ID = 'docker-id'   // DockerHub credentials
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+                git branch: 'master', credentialsId: 'GitHubCreds', url: 'https://github.com/git-it/YOUR_REPO.git'
             }
         }
 
